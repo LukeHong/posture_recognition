@@ -16,13 +16,14 @@ Now I train this model again that using Python, Keras, and Theano as backend, th
 ## Data
 -------
 **Input** :  
-We got the body coordinate from Kinect, then using Dot Product to find the angle of shoulder and elbow. 
-    * angle of left shoulder
-    * angle of right shoulder
-    * angle of left elbow
-    * angle of right elbow
+We got the body coordinate from Kinect, then using Dot Product to find the angle of shoulder and elbow.   
+  * angle of left shoulder  
+  * angle of right shoulder  
+  * angle of left elbow  
+  * angle of right elbow  
+  
 **Output** :  
-classified to 9 classes, example:
-    * 1 => 1 0 0 0 0 0 0 0 0 
-    * 5 => 0 0 0 0 1 0 0 0 0
-    * 9 => 0 0 0 0 0 0 0 0 1
+classified to 9 classes, example:  
+  * 1 => 1 0 0 0 0 0 0 0 0  
+  * 5 => 0 0 0 0 1 0 0 0 0  
+  * 9 => 0 0 0 0 0 0 0 0 1  
