@@ -35,19 +35,15 @@ for index, row in test_df.iterrows():
 x_test = np.array(x)
 y_test = np.array(y)
 
+layer = 8
 
 #model
 model = Sequential()
-model.add(Dense(input_dim=4, output_dim=1000))
-model.add(Activation('sigmoid'))
-model.add(Dense(output_dim=1000))
-model.add(Activation('sigmoid'))
-model.add(Dense(output_dim=1000))
-model.add(Activation('sigmoid'))
-model.add(Dense(output_dim=1000))
-model.add(Activation('sigmoid'))
-model.add(Dense(output_dim=1000))
-model.add(Activation('sigmoid'))
+model.add(Dense(input_dim=4, output_dim=16))
+model.add(Activation('softplus'))
+for i in range(layer):
+    model.add(Dense(16))
+    model.add(Activation('softplus'))
 model.add(Dense(output_dim=9))
 model.add(Activation('softmax'))
 
@@ -57,7 +53,7 @@ model.compile(loss='categorical_crossentropy',
 
 
 #train
-model.fit(x_train, y_train, batch_size=200, nb_epoch=10)
+model.fit(x_train, y_train, batch_size=64, nb_epoch=40)
 
 
 #result
