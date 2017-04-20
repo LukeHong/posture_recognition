@@ -2,6 +2,7 @@ import datetime
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from keras.layers import Dense, Activation
 from keras.models import Sequential
@@ -35,25 +36,30 @@ for index, row in test_df.iterrows():
 x_test = np.array(x)
 y_test = np.array(y)
 
-layer = 8
+layer = 5
+units = 16
+activation = 'relu'
 
 #model
 model = Sequential()
-model.add(Dense(input_dim=4, output_dim=16))
-model.add(Activation('softplus'))
+model.add(Dense(input_dim=4, units=units))
+model.add(Activation(activation))
 for i in range(layer):
-    model.add(Dense(16))
-    model.add(Activation('softplus'))
-model.add(Dense(output_dim=9))
+    model.add(Dense(units=units))
+    model.add(Activation(activation))
+model.add(Dense(units=9))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
               optimizer=Adam(),
               metrics=['accuracy'])
 
-
 #train
-model.fit(x_train, y_train, batch_size=64, nb_epoch=40)
+history = model.fit(x_train, y_train,
+                    batch_size=64,
+                    epochs=20,
+                    shuffle=True,
+                    validation_split=0.1)
 
 
 #result
@@ -70,3 +76,19 @@ filename = 'model_{0}_acc{1}'.format(time, accuracy)
 with open('result/'+filename+'.json', 'w') as file:
     file.write(model_result)
 model.save_weights('result/'+filename+'.h5')
+
+# plot result
+loss = history.history.get('loss')
+acc = history.history.get('acc')
+
+plt.figure(0)
+plt.subplot(121)
+plt.plot(range(len(loss)), loss)
+plt.title('Loss')
+#plt.legend(loc='upper left')
+plt.subplot(122)
+plt.plot(range(len(acc)), acc)
+plt.title('Accuracy')
+plt.show()
+#plt.savefig('{}_{}*{}.jpg'.format(activation, layer, units),dpi=300,format='jpg')
+plt.close()
